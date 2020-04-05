@@ -1,0 +1,45 @@
+<?xml version="1.0" ?> 
+<project name="helloworld" default="war">
+ 
+    <path id="compile.classpath">
+        <fileset dir="WebContent/WEB-INF/lib">
+            <include name="*.jar"/>
+        </fileset>
+    	<fileset dir="C:\1DevOps\java\tomcat9\lib">
+    	            <include name="*.jar"/>
+    	 </fileset>
+    </path>
+    
+	<target name="clean">
+	        <delete dir="dist" />
+	        <delete dir="build2" />
+	 </target>
+	
+    <target name="init" depends="clean">
+        <mkdir dir="build2/classes"/>
+        <mkdir dir="dist" />
+    </target>
+     
+    <target name="compile" depends="init" >
+        <javac destdir="build2/classes" debug="true" srcdir="src" includeantruntime="false">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+     
+    <target name="war" depends="compile">
+    	<!-- <war destfile="dist/helloworld.war" webxml="WebContent/WEB-INF/web.xml"> -->
+        <war destfile="dist/helloworld.war" needxmlfile='false'>
+            <!--<fileset dir="WebContent">
+            	<exclude name="WebContent/WEB-INF/web.xml" />
+            </fileset>-->
+            <lib dir="WebContent/WEB-INF/lib"/>
+        	<classes dir="build2/classes"/>
+        </war>
+    </target>
+     
+    <!--<target name="clean">
+        <delete dir="dist" />
+        <delete dir="build" />
+    </target>-->
+     
+</project>
